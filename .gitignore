@@ -48,3 +48,7 @@ Thumbs.db
 *.mov
 *.wmv
 
+/TaskNET012/TaskNET012/bin/Debug/netcoreapp3.1
+/TaskNET012/TaskNET012/obj
+/TaskNET012/.vs/TaskNET012
+/.vs
