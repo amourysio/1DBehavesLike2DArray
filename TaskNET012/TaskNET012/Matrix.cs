@@ -2,50 +2,92 @@
 
 namespace TaskNET012
 {
-    // Generic
-    public abstract class Matrix
+    /// <summary>
+    /// Matrix class is simply One-Dimension array who can change
+    /// to Two-Dimensional array with some Condition and Methods
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class Matrix<T> 
     {
+        public EventHandler<MatrixEventArgs> OnItemChange { get; set; }
+        protected  T[] _matrix;
+        protected int _rowNumber;
+        protected int _colNumber;
 
-        private int[] _matrix;
-        private int _matrixSize;
-        
-        public Matrix(int matrixSze)
+        /// <summary>
+        /// Matrix Generic"T" Constructor
+        /// There have Exception and there have some Condition
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <param name="cols"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public Matrix(int rows, int cols)
         {
-            this.MatrixSize=matrixSze;
-            this._matrix = new int[MatrixSize * MatrixSize];
-        }
-       
-        // TODO: make it private/protected
-        public int[] matrix
-        {
-            get { return _matrix; }
-           private set { _matrix = value; }
-        }
-        protected int MatrixSize
-        {
-            get { return _matrixSize; }
-            set { _matrixSize = value; }
-        }
-        protected void SetElementAtPosition(int row,int col, int value)
-        {
-           
-            if(GetIndex(row, col) == value)
+            if (rows <= -1 && rows < 0 || cols <= -1 && cols < 0)
             {
-                throw new ArgumentException("Value is Equal");
+                throw new ArgumentException();
             }
             else
             {
-                matrix[GetIndex(row, col)] = value;
+                this.RowNumber = rows;
+                this.ColsNumber = cols;
+                this._matrix = new T[RowNumber];
             }
-         }
-        protected virtual int GetElementAtPosition(int row,int col)
-        {
-            return matrix[GetIndex(row, col)];
         }
-        protected abstract int GetIndex(int row, int col);
-
-        // Add indexer
-
-
+        /// <summary>
+        /// Property _colNumber
+        /// </summary>
+        protected int ColsNumber
+        {
+            get { return _colNumber; }
+            set { _colNumber = value; }
+        }
+        /// <summary>
+        /// Property _rowNumber
+        /// </summary>
+        protected int RowNumber
+        {
+            get { return _rowNumber; }
+            set { _rowNumber = value; }
+        }
+        /// <summary>
+        /// indexers allow instances of a class or struct to be indexed just like arrays.
+        /// </summary>
+        /// <value value="_matrix[GetIndex(i, j)]"></value>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        /// <exception cref="IndexOutOfRangeException"></exception>
+        public virtual T this[int i, int j]
+        {
+            get
+            {                
+                return _matrix[GetIndex(i, j)];
+            }
+            set
+            {
+                if (i > _rowNumber || j > _colNumber || i < 0 || j < 0 )
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                else if (_matrix[GetIndex(i, j)].Equals(value))
+                {
+                    Console.WriteLine("Not Generate Event");
+                }
+                else
+                {
+                    OnItemChange?.Invoke(this, new MatrixEventArgs(i, j, value));
+                   _matrix[GetIndex(i, j)] = value;
+                }
+            }
+        }
+        /// <summary>
+        /// GetIndex is Method who split two parameter
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        public abstract int GetIndex(int i, int j);
+     
     }
 }

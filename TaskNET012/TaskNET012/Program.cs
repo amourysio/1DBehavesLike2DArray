@@ -6,21 +6,27 @@ namespace TaskNET012
     {
         static void Main(string[] args)
         {
-            SquareMatrix square = new SquareMatrix(5);
-
-
-           
+            //SquareMatrix<int> square = new SquareMatrix<int>(3);
+            //square.OnItemChange += MyMethod;
             
+            //square[1, 2] = 1;
+            //square[1, 2] = 1;
+            
+            DiagonalMatrix<int> diagonal = new DiagonalMatrix<int>(3);
+            diagonal.OnItemChange +=MyMethod;
+            diagonal[0, 0] = 5;
+            diagonal[0, 0] = 5;
+            Console.WriteLine(diagonal[0, 0]);
+
+
 
         }
-        //public static TResults[] Transform<T, TResult>(this T[] array, Func<T, TResult> transformation)
-        //{
-        //    TResult[] transformedArray = new TResult[array.Length];
-        //    for (int i = 0; i < array.Length; i++)
-        //    {
-        //        transformedArray[i] = transformation(array[i]);
-        //    }
-        //    return transformedArray;
-        //}
+        public static void MyMethod(object arg, MatrixEventArgs matrixEventArgs)
+        {
+            Console.WriteLine(matrixEventArgs._colI.ToString(),matrixEventArgs._rowI.ToString(),matrixEventArgs._value.ToString());
+            Console.WriteLine("Item Change");
+        }
+
+
     }
 }
