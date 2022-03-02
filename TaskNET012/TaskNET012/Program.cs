@@ -6,20 +6,23 @@ namespace TaskNET012
     {
         static void Main(string[] args)
         {
-            //SquareMatrix<int> square = new SquareMatrix<int>(3);
-            //square.OnItemChange += MyMethod;
-            
-            //square[1, 2] = 1;
-            //square[1, 2] = 1;
-            
-            DiagonalMatrix<int> diagonal = new DiagonalMatrix<int>(3);
-            diagonal.OnItemChange +=MyMethod;
-            diagonal[0, 0] = 5;
-            diagonal[0, 0] = 5;
-            Console.WriteLine(diagonal[0, 0]);
+            try
+            {
+                SquareMatrix<int> square = new SquareMatrix<int>(3);
+                square.OnItemChange += MyMethod;
+                square[1, 2] = 1;
+                square[1, 2] = 1;
 
-
-
+                DiagonalMatrix<int> diagonal = new DiagonalMatrix<int>(3);
+                diagonal.OnItemChange += MyMethod;
+                diagonal[0, 0] = 5;
+                diagonal[0, 0] = 5;
+                Console.WriteLine(diagonal[0, 0]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         public static void MyMethod(object arg, MatrixEventArgs matrixEventArgs)
         {

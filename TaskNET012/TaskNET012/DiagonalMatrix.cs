@@ -9,14 +9,14 @@ namespace TaskNET012
     /// Inheritence from Matrix Class
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal class DiagonalMatrix<T> : Matrix<T>
+    public class DiagonalMatrix<T> : Matrix<T>
     {
         /// <summary>
         /// DiagonalMatrix Constructor with Condition for Resize
         /// </summary>
         /// <param name="matrixSize"></param>
         public DiagonalMatrix(int matrixSize) : base(matrixSize, matrixSize)
-        { 
+        {
             base._matrix = new T[matrixSize];
         }
         /// <summary>
@@ -30,12 +30,8 @@ namespace TaskNET012
         {
             get
             {
-                if(j != i)
-                {
+                if (j != i) { return default(T); }
                    
-                    return default(T);
-                }
-               
                 return base._matrix[GetIndex(i, j)];
             }
             set
@@ -50,9 +46,8 @@ namespace TaskNET012
                 }
                 else
                 {
-
-                OnItemChange?.Invoke(this, new MatrixEventArgs(i, j, value));
-                _matrix[GetIndex(i, j)] = value;
+                    OnItemChange?.Invoke(this, new MatrixEventArgs(i, j, value));
+                    _matrix[GetIndex(i, j)] = value;
                 }
             }
         }
@@ -63,23 +58,6 @@ namespace TaskNET012
         /// <param name="i"></param>
         /// <param name="j"></param>
         /// <returns></returns>
-        public override int GetIndex(int i, int j)
-        {
-            
-            return i;
-        }
+        public override int GetIndex(int i, int j) => i; 
     }
-    // 123456789
-    // 1 2 3 
-    // 4 5 6
-    // 7 8 9
-
-    // 1 0 0  (0,0)
-    // 0 2 0  (1,1) (1,2)
-    // 0 0 3  (2,2)
-
-    // 1(0), 2(1), 3(2)
-
-    // if(i != j) retun 0
-    // else return matrix[i]
 }

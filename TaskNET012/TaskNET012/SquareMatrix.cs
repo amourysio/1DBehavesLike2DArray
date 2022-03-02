@@ -31,12 +31,7 @@ namespace TaskNET012
         /// <exception cref="IndexOutOfRangeException"></exception>
         public override T this[int i, int j]
         {
-            get
-            {
-               
-                return _matrix[GetIndex(i, j)];
-            } 
-
+            get { return _matrix[GetIndex(i, j)]; }
             set
             {
                 if (i > _rowNumber || j > _colNumber || i < 0 || j < 0)
@@ -51,7 +46,6 @@ namespace TaskNET012
                 {
                 OnItemChange?.Invoke(this, new MatrixEventArgs(i, j, value));
                 _matrix[GetIndex(i, j)] = value;
-
                 }
             }
         }

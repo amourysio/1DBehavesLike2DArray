@@ -25,6 +25,5 @@ namespace TaskNET012
             this._rowI = i;
             this._colI = j;
         }
-
     }
 }
